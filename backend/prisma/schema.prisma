@@ -7,34 +7,89 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
-  name      String?
-  photoUrl  String?
-  googleId  String?   @unique
-  createdAt DateTime  @default(now())
-  passkeys  Passkey[]
-}
-
-model Passkey {
-  id           String   @id @default(cuid())
-  userId       String
-  credentialId String   @unique
-  publicKey    Bytes
-  counter      BigInt
-  createdAt    DateTime @default(now())
-  user         User     @relation(fields: [userId], references: [id])
-}
-
 model Client {
-  id                  String    @id @default(uuid())
+  id                  String         @id @default(uuid()) @db.Uuid
   name                String
-  email               String    @unique
+  email               String         @unique
   ikigai_summary      String?
   business_idea       String?
   offer_summary       String?
   coaching_start_date DateTime?
-  status              String    @default("active")
-  created_at          DateTime  @default(now())
+  status              String         @default("active")
+  created_at          DateTime       @default(now())
+  sessions            Session[]
+  plan_tasks          PlanTask[]
+  daily_usage         DailyUsage[]
+  subscriptions       Subscription[]
+  users               User[]
+  session_chunks      SessionChunk[]
+}
+
+model Session {
+  id             String         @id @default(uuid()) @db.Uuid
+  client_id      String         @db.Uuid
+  session_number Int
+  fecha          DateTime
+  tipo           String         @default("Formal")
+  notas_clave    String?
+  resumen_ia     String?
+  transcripcion  String?
+  grabacion_url  String?
+  created_at     DateTime       @default(now())
+  client         Client         @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  session_chunks SessionChunk[]
+}
+
+model SessionChunk {
+  id         String   @id @default(uuid()) @db.Uuid
+  client_id  String   @db.Uuid
+  session_id String   @db.Uuid
+  chunk_text String
+  created_at DateTime @default(now())
+  client     Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  session    Session  @relation(fields: [session_id], references: [id], onDelete: Cascade)
+}
+
+model PlanTask {
+  id           String    @id @default(uuid()) @db.Uuid
+  client_id    String    @db.Uuid
+  day_number   Int
+  description  String
+  completed    Boolean   @default(false)
+  completed_at DateTime?
+  created_at   DateTime  @default(now())
+  client       Client    @relation(fields: [client_id], references: [id], onDelete: Cascade)
+}
+
+model DailyUsage {
+  id              String   @id @default(uuid()) @db.Uuid
+  client_id       String   @db.Uuid
+  date            DateTime @db.Date
+  messages_used   Int      @default(0)
+  tasks_completed Int      @default(0)
+  created_at      DateTime @default(now())
+  client          Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
+
+  @@unique([client_id, date])
+}
+
+model Subscription {
+  id                String   @id @default(uuid()) @db.Uuid
+  client_id         String   @db.Uuid
+  status            String   @default("trial")
+  plan              String   @default("basic")
+  price_usd         Decimal  @db.Decimal(10, 2)
+  wompi_token       String?
+  next_billing_date DateTime?
+  created_at        DateTime @default(now())
+  client            Client   @relation(fields: [client_id], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id         String   @id @db.Uuid
+  email      String   @unique
+  client_id  String?  @db.Uuid
+  role       String   @default("client")
+  created_at DateTime @default(now())
+  client     Client?  @relation(fields: [client_id], references: [id], onDelete: SetNull)
 }

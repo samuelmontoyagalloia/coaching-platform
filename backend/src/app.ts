@@ -3,15 +3,12 @@ import passport from 'passport'
 import './config/passport.js'
 import healthRouter from './routes/health.js'
 import authRouter from './routes/auth.js'
-import passkeyRouter from './routes/passkey.js'
 import { authenticate } from './middleware/authenticate.js'
 
 const PUBLIC_PATHS: Array<{ method: string; path: string }> = [
-  { method: 'GET',  path: '/api/health' },
-  { method: 'GET',  path: '/auth/google' },
-  { method: 'GET',  path: '/auth/google/callback' },
-  { method: 'POST', path: '/auth/passkey/login/start' },
-  { method: 'POST', path: '/auth/passkey/login/finish' },
+  { method: 'GET', path: '/api/health' },
+  { method: 'GET', path: '/auth/google' },
+  { method: 'GET', path: '/auth/google/callback' },
 ]
 
 export function createApp() {
@@ -41,7 +38,6 @@ export function createApp() {
 
   app.use('/api/health', healthRouter)
   app.use('/auth', authRouter)
-  app.use('/auth/passkey', passkeyRouter)
 
   return app
 }
