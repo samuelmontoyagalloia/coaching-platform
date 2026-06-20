@@ -126,7 +126,7 @@ export default function LoginPage() {
       <div style={{ position: 'absolute', inset: 0, opacity: 0.05, pointerEvents: 'none', backgroundImage: NOISE }} />
 
       {/* ── Wordmark — top left ────────────────────────────────── */}
-      <div style={{ position: 'absolute', top: 32, left: 36, zIndex: 3, display: 'flex', flexDirection: 'column', lineHeight: 1.05 }}>
+      <div style={{ position: 'absolute', top: 32, left: 36, zIndex: 3, display: 'flex', alignItems: 'baseline', gap: 6 }}>
         <span style={{ fontFamily: '"Bricolage Grotesque", sans-serif', fontWeight: 700, fontSize: 18, letterSpacing: '-0.02em', color: '#FDFCFA' }}>Coaching</span>
         <span style={{ fontFamily: '"Bricolage Grotesque", sans-serif', fontWeight: 700, fontSize: 18, letterSpacing: '-0.02em', color: '#3385FF' }}>1:1</span>
       </div>
