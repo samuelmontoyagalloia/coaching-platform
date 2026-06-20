@@ -6,3 +6,35 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  photoUrl  String?
+  googleId  String?   @unique
+  createdAt DateTime  @default(now())
+  passkeys  Passkey[]
+}
+
+model Passkey {
+  id           String   @id @default(cuid())
+  userId       String
+  credentialId String   @unique
+  publicKey    Bytes
+  counter      BigInt
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model Client {
+  id                  String    @id @default(uuid())
+  name                String
+  email               String    @unique
+  ikigai_summary      String?
+  business_idea       String?
+  offer_summary       String?
+  coaching_start_date DateTime?
+  status              String    @default("active")
+  created_at          DateTime  @default(now())
+}
