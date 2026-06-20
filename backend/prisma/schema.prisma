@@ -86,10 +86,24 @@ model Subscription {
 }
 
 model User {
-  id         String   @id @db.Uuid
-  email      String   @unique
-  client_id  String?  @db.Uuid
-  role       String   @default("client")
-  created_at DateTime @default(now())
-  client     Client?  @relation(fields: [client_id], references: [id], onDelete: SetNull)
+  id         String    @id @db.Uuid
+  email      String    @unique
+  client_id  String?   @db.Uuid
+  role       String    @default("client")
+  created_at DateTime  @default(now())
+  client     Client?   @relation(fields: [client_id], references: [id], onDelete: SetNull)
+  passkeys   Passkey[]
+}
+
+model Passkey {
+  id            String   @id @default(uuid()) @db.Uuid
+  user_id       String   @db.Uuid
+  credential_id String   @unique
+  public_key    String
+  counter       BigInt   @default(0)
+  device_type   String?
+  backed_up     Boolean  @default(false)
+  transports    String?
+  created_at    DateTime @default(now())
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
