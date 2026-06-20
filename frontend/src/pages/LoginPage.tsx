@@ -5,7 +5,7 @@ import { startAuthentication } from '@simplewebauthn/browser'
 const BACKEND_URL =
   import.meta.env.VITE_TUNNEL_URL ??
   import.meta.env.VITE_BACKEND_URL ??
-  'http://localhost:3001'
+  'http://localhost:3000'
 
 export default function LoginPage() {
   const navigate = useNavigate()

@@ -7,7 +7,7 @@ const IS_PROD = process.env.NODE_ENV === 'production'
 const callbackBase =
   !IS_PROD && process.env.TUNNEL_URL
     ? process.env.TUNNEL_URL
-    : (process.env.BACKEND_URL ?? 'http://localhost:3001')
+    : (process.env.BACKEND_URL ?? 'http://localhost:3000')
 
 passport.use(
   new GoogleStrategy(
