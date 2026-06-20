@@ -312,7 +312,7 @@ export default function LoginPage() {
       {phase !== 'success' && (
         <div style={{ position: 'absolute', bottom: 30, left: 0, right: 0, zIndex: 2, display: 'flex', justifyContent: 'center', padding: '0 24px' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '7px 0' }}>
-            {['Espontáneo', 'Disciplinado', 'Con Fe', 'Libre'].map((word, i, arr) => (
+            {['Propósito', 'Negocio', 'Plan', 'Ejecución'].map((word, i, arr) => (
               <span key={word} style={{ display: 'inline-flex', alignItems: 'center' }}>
                 <span style={{ fontFamily: '"DM Sans", sans-serif', fontSize: 9, fontWeight: 500, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#5A5650' }}>{word}</span>
                 {i < arr.length - 1 && (
