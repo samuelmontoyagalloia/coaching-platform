@@ -20,21 +20,17 @@ passport.use(
         const email = profile.emails?.[0]?.value
         if (!email) return done(new Error('No email provided by Google'))
 
+        const client = await prisma.client.findUnique({ where: { email } })
+        if (!client) return done(null, false, { message: 'access_denied' })
+
         const name      = profile.displayName ?? null
         const photo_url = profile.photos?.[0]?.value ?? null
 
         let user = await prisma.user.findUnique({ where: { email } })
 
         if (!user) {
-          const client = await prisma.client.findUnique({ where: { email } })
-
           user = await prisma.user.create({
-            data: {
-              email,
-              name,
-              photo_url,
-              client_id: client?.id ?? null,
-            },
+            data: { email, name, photo_url, client_id: client.id },
           })
         } else {
           user = await prisma.user.update({

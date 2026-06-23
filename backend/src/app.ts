@@ -20,7 +20,8 @@ export function createApp() {
   app.use((req, res, next) => {
     const origin = req.headers.origin as string | undefined
     const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:5173'
-    const allowed = [frontendUrl]
+    const frontendTunnelUrl = process.env.FRONTEND_TUNNEL_URL
+    const allowed = frontendTunnelUrl ? [frontendUrl, frontendTunnelUrl] : [frontendUrl]
     if (origin && allowed.includes(origin)) {
       res.setHeader('Access-Control-Allow-Origin', origin)
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
