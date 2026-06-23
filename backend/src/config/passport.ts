@@ -1,6 +1,5 @@
 import passport from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
-import { randomUUID } from 'crypto'
 import prisma from '../lib/prisma.js'
 
 const IS_PROD = process.env.NODE_ENV === 'production'
@@ -21,18 +20,26 @@ passport.use(
         const email = profile.emails?.[0]?.value
         if (!email) return done(new Error('No email provided by Google'))
 
+        const name      = profile.displayName ?? null
+        const photo_url = profile.photos?.[0]?.value ?? null
+
         let user = await prisma.user.findUnique({ where: { email } })
 
         if (!user) {
-          // Link to a Client with the same email if one exists
           const client = await prisma.client.findUnique({ where: { email } })
 
           user = await prisma.user.create({
             data: {
-              id: randomUUID(),
               email,
+              name,
+              photo_url,
               client_id: client?.id ?? null,
             },
+          })
+        } else {
+          user = await prisma.user.update({
+            where: { id: user.id },
+            data: { name, photo_url },
           })
         }
 

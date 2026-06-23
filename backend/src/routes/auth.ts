@@ -39,7 +39,8 @@ router.get('/me', async (req: Request, res: Response): Promise<void> => {
   res.json({
     id: user.id,
     email: user.email,
-    name: user.client?.name ?? null,
+    name: user.name ?? user.client?.name ?? null,
+    photo_url: user.photo_url ?? null,
     role: user.role,
     client_id: user.client_id,
   })

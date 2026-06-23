@@ -15,6 +15,7 @@ async function fetchUserInfo(token: string) {
   const data = await res.json()
   if (data.email) localStorage.setItem('user_email', data.email)
   if (data.name) localStorage.setItem('user_name', data.name)
+  if (data.photo_url) localStorage.setItem('user_photo', data.photo_url)
 }
 
 async function registerPasskey(token: string): Promise<void> {
