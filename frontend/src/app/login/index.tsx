@@ -105,7 +105,7 @@ export default function LoginPage() {
 
   const displayName = userName.includes('@')
     ? userName.split('@')[0]
-    : userName
+    : (userName.split(' ')[0] ?? userName)
 
   const initial = displayName.charAt(0).toUpperCase() || '?'
 
