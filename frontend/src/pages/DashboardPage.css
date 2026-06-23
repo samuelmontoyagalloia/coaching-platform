@@ -1,0 +1,36 @@
+@keyframes scFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes scSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes scPulse {
+  0%   { transform: scale(1); opacity: .5; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes scBreathe {
+  0%, 100% { opacity: .55; }
+  50%       { opacity: 1; }
+}
+@keyframes scPop {
+  0%   { transform: scale(.6); opacity: 0; }
+  60%  { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.db-fade         { animation: scFade    .7s ease                        both; }
+.db-spin         { animation: scSpin    .7s linear              infinite;     }
+.db-pulse-ring   { animation: scPulse   2.2s ease-out            infinite;     }
+.db-breathe      { animation: scBreathe 2.2s ease-in-out         infinite;     }
+.db-pop          { animation: scPop     .5s cubic-bezier(.2,.7,.3,1.2) both;   }
+
+.db-logout-btn:hover  { color: #FDFCFA       !important; border-color: rgba(255,255,255,0.4) !important; }
+.db-logout-btn:active { transform: translateY(1px); }
+.db-reenter-btn:hover  { transform: translateY(-1px); }
+.db-reenter-btn:active { transform: translateY(0); }
+
+/* Mobile */
+@media (max-width: 480px) {
+  .db-privado { display: none !important; }
+}
