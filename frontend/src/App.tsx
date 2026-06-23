@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 import LoginPage from './app/login'
 import CallbackPage from './pages/CallbackPage'
-import DashboardPage from './pages/DashboardPage'
+import DashboardPage from './app/dashboard/DashboardPage'
 import AdminPage from './pages/AdminPage'
 import ProtectedRoute from './components/ProtectedRoute'
 
