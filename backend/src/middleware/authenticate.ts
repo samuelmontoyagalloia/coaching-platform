@@ -10,8 +10,8 @@ export function authenticate(req: Request, res: Response, next: NextFunction): v
   }
 
   try {
-    const payload = jwt.verify(header.slice(7), process.env.JWT_SECRET!) as { userId: string }
-    req.user = { userId: payload.userId }
+    const payload = jwt.verify(header.slice(7), process.env.JWT_SECRET!) as { userId: string; role: string }
+    req.user = { userId: payload.userId, role: payload.role ?? 'client' }
     next()
   } catch {
     res.status(401).json({ error: 'Invalid token' })

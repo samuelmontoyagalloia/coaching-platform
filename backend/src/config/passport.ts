@@ -44,7 +44,7 @@ passport.use(
           console.log('[passport] Usuario actualizado:', user.id)
         }
 
-        return done(null, { userId: user.id })
+        return done(null, { userId: user.id, role: user.role })
       } catch (err) {
         console.error('[passport] Error inesperado:', err)
         return done(err as Error)
