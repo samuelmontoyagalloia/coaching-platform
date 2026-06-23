@@ -5,6 +5,7 @@ import './login.css'
 
 const BACKEND_URL =
   import.meta.env.VITE_TUNNEL_URL ??
+  import.meta.env.VITE_API_URL ??
   import.meta.env.VITE_BACKEND_URL ??
   'http://localhost:3000'
 
