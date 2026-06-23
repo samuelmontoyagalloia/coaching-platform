@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "dev:tunnel": "tsx watch src/index.ts",
-    "build": "prisma generate && tsc --project tsconfig.build.json",
+    "build": "prisma generate && tsc --project tsconfig.build.json && mkdir -p dist/prisma && cp -r src/prisma/generated dist/prisma/",
     "start": "node dist/index.js",
     "postinstall": "prisma generate"
   },
