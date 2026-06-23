@@ -10,11 +10,11 @@ import prisma from '../lib/prisma.js'
 
 const router = Router()
 
-const IS_PROD = process.env.NODE_ENV === 'production'
 const RP_NAME = 'Coaching Platform'
 
-const ORIGIN = IS_PROD
-  ? (process.env.FRONTEND_URL ?? 'http://localhost:5173')
+const IS_TUNNEL = !!(process.env.TUNNEL_URL && process.env.NODE_ENV !== 'production')
+const ORIGIN = IS_TUNNEL
+  ? (process.env.FRONTEND_TUNNEL_URL ?? process.env.FRONTEND_URL ?? 'http://localhost:5173')
   : (process.env.FRONTEND_URL ?? 'http://localhost:5173')
 
 const RP_ID = new URL(ORIGIN).hostname
@@ -193,7 +193,7 @@ router.post('/login/finish', async (req: Request, res: Response): Promise<void> 
 
   challengeStore.delete(user.id)
 
-  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, { expiresIn: '7d' })
+  const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET!, { expiresIn: '7d' })
   res.json({ token })
 })
 
