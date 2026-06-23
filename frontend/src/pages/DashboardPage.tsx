@@ -4,7 +4,7 @@ import './DashboardPage.css'
 
 const NOISE = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")`
 
-type LogoutPhase = 'idle' | 'loggingOut' | 'loggedOut'
+type LogoutPhase = 'idle' | 'loggingOut'
 
 export default function DashboardPage() {
   const navigate = useNavigate()
@@ -27,17 +27,10 @@ export default function DashboardPage() {
   const handleLogout = () => {
     if (logoutPhase !== 'idle') return
     setLogoutPhase('loggingOut')
-    setTimeout(() => setLogoutPhase('loggedOut'), 1200)
-  }
-
-  const handleReset = () => {
-    localStorage.removeItem('auth_token')
-    localStorage.removeItem('sc_returning')
-    localStorage.removeItem('has_passkey')
-    localStorage.removeItem('user_email')
-    localStorage.removeItem('user_name')
-    localStorage.removeItem('user_photo')
-    navigate('/login', { replace: true })
+    setTimeout(() => {
+      localStorage.removeItem('auth_token')
+      navigate('/login', { replace: true })
+    }, 800)
   }
 
   return (
@@ -174,36 +167,10 @@ export default function DashboardPage() {
       {logoutPhase !== 'idle' && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 6, background: '#111010', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
 
-          {logoutPhase === 'loggingOut' && (
-            <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
-              <span className="db-spin" style={{ width: 34, height: 34, border: '2.5px solid rgba(255,255,255,.14)', borderTopColor: '#3385FF', borderRadius: '50%', display: 'inline-block' }} />
-              <span style={{ fontFamily: '"DM Sans", sans-serif', fontSize: 13, fontWeight: 300, color: '#8C8780', letterSpacing: '0.02em' }}>Cerrando sesión…</span>
-            </span>
-          )}
-
-          {logoutPhase === 'loggedOut' && (
-            <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span className="db-pop" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 66, height: 66, borderRadius: '50%', border: '1.5px solid #0066FF', background: 'rgba(0,102,255,0.08)', marginBottom: 24 }}>
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3385FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
-                </svg>
-              </span>
-              <span style={{ fontFamily: '"DM Sans", sans-serif', fontSize: 10, fontWeight: 500, letterSpacing: '0.36em', textTransform: 'uppercase', color: '#3385FF', marginBottom: 12 }}>Sesión cerrada</span>
-              <h2 style={{ fontFamily: '"Bricolage Grotesque", sans-serif', fontWeight: 300, fontSize: 28, letterSpacing: '-0.02em', margin: '0 0 10px', color: '#FDFCFA' }}>
-                Hasta pronto, {firstName}.
-              </h2>
-              <p style={{ fontFamily: '"DM Sans", sans-serif', fontWeight: 300, fontSize: 13, color: '#8C8780', margin: '0 0 30px', lineHeight: 1.6 }}>
-                El proceso sigue construyéndose<br />mientras descansas.
-              </p>
-              <button
-                className="db-reenter-btn"
-                onClick={handleReset}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 20px', background: '#FDFCFA', color: '#111010', border: 'none', borderRadius: 6, cursor: 'pointer', fontFamily: '"DM Sans", sans-serif', fontWeight: 500, fontSize: 13, transition: 'transform 160ms ease' }}
-              >
-                Volver a entrar
-              </button>
-            </span>
-          )}
+          <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+            <span className="db-spin" style={{ width: 34, height: 34, border: '2.5px solid rgba(255,255,255,.14)', borderTopColor: '#3385FF', borderRadius: '50%', display: 'inline-block' }} />
+            <span style={{ fontFamily: '"DM Sans", sans-serif', fontSize: 13, fontWeight: 300, color: '#8C8780', letterSpacing: '0.02em' }}>Cerrando sesión…</span>
+          </span>
         </div>
       )}
     </div>

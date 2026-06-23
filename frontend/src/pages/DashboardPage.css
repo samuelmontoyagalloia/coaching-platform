@@ -25,10 +25,8 @@
 .db-breathe      { animation: scBreathe 2.2s ease-in-out         infinite;     }
 .db-pop          { animation: scPop     .5s cubic-bezier(.2,.7,.3,1.2) both;   }
 
-.db-logout-btn:hover  { color: #FDFCFA       !important; border-color: rgba(255,255,255,0.4) !important; }
+.db-logout-btn:hover  { color: #FDFCFA !important; border-color: rgba(255,255,255,0.4) !important; }
 .db-logout-btn:active { transform: translateY(1px); }
-.db-reenter-btn:hover  { transform: translateY(-1px); }
-.db-reenter-btn:active { transform: translateY(0); }
 
 /* Mobile */
 @media (max-width: 480px) {
