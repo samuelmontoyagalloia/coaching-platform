@@ -30,7 +30,7 @@ export default function DashboardPage() {
     setTimeout(() => {
       localStorage.removeItem('auth_token')
       navigate('/login', { replace: true })
-    }, 800)
+    }, 1800)
   }
 
   return (
@@ -166,11 +166,20 @@ export default function DashboardPage() {
       ══════════════════════════════════════════════════ */}
       {logoutPhase !== 'idle' && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 6, background: '#111010', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
-
-          <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
-            <span className="db-spin" style={{ width: 34, height: 34, border: '2.5px solid rgba(255,255,255,.14)', borderTopColor: '#3385FF', borderRadius: '50%', display: 'inline-block' }} />
-            <span style={{ fontFamily: '"DM Sans", sans-serif', fontSize: 13, fontWeight: 300, color: '#8C8780', letterSpacing: '0.02em' }}>Cerrando sesión…</span>
+          <span className="db-pop" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 72, height: 72, borderRadius: '50%', background: '#0066FF', marginBottom: 26 }}>
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FDFCFA" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
           </span>
+          <span style={{ fontFamily: '"DM Sans", sans-serif', fontSize: 10, fontWeight: 500, letterSpacing: '0.36em', textTransform: 'uppercase', color: '#3385FF', marginBottom: 12 }}>
+            Cerrando sesión
+          </span>
+          <h2 style={{ fontFamily: '"Bricolage Grotesque", sans-serif', fontWeight: 300, fontSize: 32, letterSpacing: '-0.02em', margin: '0 0 28px', color: '#FDFCFA' }}>
+            Hasta pronto, {firstName}.
+          </h2>
+          <div style={{ position: 'relative', width: 180, height: 3, background: 'rgba(255,255,255,.12)', borderRadius: 999, overflow: 'hidden' }}>
+            <span className="db-bar" style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '38%', background: '#0066FF', borderRadius: 999 }} />
+          </div>
         </div>
       )}
     </div>

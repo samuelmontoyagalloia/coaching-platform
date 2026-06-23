@@ -18,12 +18,17 @@
   60%  { transform: scale(1.08); }
   100% { transform: scale(1); opacity: 1; }
 }
+@keyframes scBar {
+  0%   { transform: translateX(-110%); }
+  100% { transform: translateX(360%); }
+}
 
-.db-fade         { animation: scFade    .7s ease                        both; }
-.db-spin         { animation: scSpin    .7s linear              infinite;     }
+.db-fade         { animation: scFade    .7s  ease                        both; }
+.db-spin         { animation: scSpin    .7s  linear              infinite;     }
 .db-pulse-ring   { animation: scPulse   2.2s ease-out            infinite;     }
 .db-breathe      { animation: scBreathe 2.2s ease-in-out         infinite;     }
-.db-pop          { animation: scPop     .5s cubic-bezier(.2,.7,.3,1.2) both;   }
+.db-pop          { animation: scPop     .5s  cubic-bezier(.2,.7,.3,1.2) both;  }
+.db-bar          { animation: scBar     1.1s ease-in-out         infinite;     }
 
 .db-logout-btn:hover  { color: #FDFCFA !important; border-color: rgba(255,255,255,0.4) !important; }
 .db-logout-btn:active { transform: translateY(1px); }
