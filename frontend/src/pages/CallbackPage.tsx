@@ -58,22 +58,19 @@ export default function CallbackPage() {
 
     localStorage.setItem('auth_token', token)
     localStorage.setItem('sc_returning', 'true')
-
-    // Show success animation immediately, do async work in background
     setPhase('success')
 
-    const asyncWork = fetchUserInfo(token)
+    // Animate for at least 2200ms, but also wait for async work.
+    // Timer lives inside the promise chain so StrictMode cleanup can't cancel it.
+    const started = performance.now()
+    fetchUserInfo(token)
       .catch(() => {})
       .then(() => registerPasskey(token))
       .catch(() => {})
-
-    // Navigate after animation (2200ms), waiting for async work too
-    const timer = setTimeout(async () => {
-      await asyncWork
-      navigate('/dashboard', { replace: true })
-    }, 2200)
-
-    return () => clearTimeout(timer)
+      .then(() => {
+        const remaining = Math.max(0, 2200 - (performance.now() - started))
+        setTimeout(() => navigate('/dashboard', { replace: true }), remaining)
+      })
   }, [navigate])
 
   return (
