@@ -22,12 +22,15 @@ router.get(
       'google',
       { session: false },
       (err: Error | null, user: { userId: string } | false, info: { message?: string } | undefined) => {
+        console.log('[auth] Google callback — user:', user, '| info:', info, '| err:', err)
         if (err) return next(err)
         if (!user) {
           const code = info?.message === 'access_denied' ? 'access_denied' : 'unauthorized'
+          console.log('[auth] Redirigiendo a /login?error=' + code)
           return res.redirect(`${frontendUrl}/login?error=${code}`)
         }
         const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET!, { expiresIn: '7d' })
+        console.log('[auth] Login exitoso, userId:', user.userId)
         res.redirect(`${frontendUrl}/auth/callback?token=${token}`)
       }
     )(req, res, next)

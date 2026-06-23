@@ -18,29 +18,35 @@ passport.use(
     async (_accessToken, _refreshToken, profile, done) => {
       try {
         const email = profile.emails?.[0]?.value
+        console.log('[passport] Google callback — email recibido:', email)
         if (!email) return done(new Error('No email provided by Google'))
 
         const client = await prisma.client.findUnique({ where: { email } })
+        console.log('[passport] Client lookup result:', client ? `encontrado id=${client.id}` : 'NO ENCONTRADO → access_denied')
         if (!client) return done(null, false, { message: 'access_denied' })
 
         const name      = profile.displayName ?? null
         const photo_url = profile.photos?.[0]?.value ?? null
 
         let user = await prisma.user.findUnique({ where: { email } })
+        console.log('[passport] User lookup result:', user ? `encontrado id=${user.id}` : 'nuevo usuario, creando...')
 
         if (!user) {
           user = await prisma.user.create({
             data: { email, name, photo_url, client_id: client.id },
           })
+          console.log('[passport] Usuario creado:', user.id)
         } else {
           user = await prisma.user.update({
             where: { id: user.id },
             data: { name, photo_url },
           })
+          console.log('[passport] Usuario actualizado:', user.id)
         }
 
         return done(null, { userId: user.id })
       } catch (err) {
+        console.error('[passport] Error inesperado:', err)
         return done(err as Error)
       }
     }
