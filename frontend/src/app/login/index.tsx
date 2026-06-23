@@ -18,6 +18,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [userName, setUserName] = useState('')
   const [userPhoto, setUserPhoto] = useState('')
+  const [imgFailed, setImgFailed] = useState(false)
 
   useEffect(() => {
     const returning =
@@ -213,8 +214,15 @@ export default function LoginPage() {
 
           {/* Avatar */}
           <div style={{ position: 'relative', width: 86, height: 86, borderRadius: '50%', padding: 3, background: '#0066FF', marginBottom: 22, boxSizing: 'border-box' }}>
-            {userPhoto ? (
-              <img src={userPhoto} alt={displayName} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', display: 'block' }} />
+            {userPhoto && !imgFailed ? (
+              <img
+                src={userPhoto}
+                alt={displayName}
+                referrerPolicy="no-referrer"
+                crossOrigin="anonymous"
+                onError={() => setImgFailed(true)}
+                style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', display: 'block' }}
+              />
             ) : (
               <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: '#1C1C1C', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"Bricolage Grotesque", sans-serif', fontWeight: 700, fontSize: 30, color: '#FDFCFA' }}>
                 {initial}
