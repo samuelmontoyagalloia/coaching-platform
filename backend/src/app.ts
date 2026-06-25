@@ -4,6 +4,7 @@ import './config/passport.js'
 import healthRouter from './routes/health.js'
 import authRouter from './routes/auth.js'
 import passkeyRouter from './routes/passkey.js'
+import dashboardRouter from './routes/dashboard.js'
 import { authenticate } from './middleware/authenticate.js'
 
 const PUBLIC_PATHS: Array<{ method: string; path: string }> = [
@@ -41,6 +42,7 @@ export function createApp() {
   })
 
   app.use('/api/health', healthRouter)
+  app.use('/api/dashboard', dashboardRouter)
   app.use('/auth', authRouter)
   app.use('/auth/passkey', passkeyRouter)
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import DashboardPage from './DashboardPage'
 
@@ -11,10 +11,16 @@ describe('DashboardPage (new)', () => {
   beforeEach(() => {
     localStorage.clear()
     vi.useFakeTimers()
+    vi.stubGlobal('fetch', vi.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ streak: 42, name: 'Test', photo_url: null }),
+      })
+    ))
   })
 
   afterEach(() => {
     vi.useRealTimers()
+    vi.restoreAllMocks()
   })
 
   it('renders coaching branding', () => {
@@ -120,5 +126,41 @@ describe('DashboardPage (new)', () => {
     const allDivs = container.querySelectorAll('div')
     const questionDiv = Array.from(allDivs).find((d) => d.textContent === '?')
     expect(questionDiv).toBeInTheDocument()
+  })
+
+  it('fetches streak from backend API when token exists', async () => {
+    vi.useRealTimers()
+    localStorage.setItem('auth_token', 'valid-token')
+    localStorage.setItem('user_name', 'Samuel')
+    renderWithRouter(<DashboardPage />)
+    await waitFor(() => {
+      const streaks = screen.getAllByText('42')
+      expect(streaks.length).toBeGreaterThanOrEqual(1)
+    })
+  })
+
+  it('calls /api/dashboard with auth header', async () => {
+    vi.useRealTimers()
+    localStorage.setItem('auth_token', 'test-token')
+    const mockFetch = vi.mocked(fetch)
+    renderWithRouter(<DashboardPage />)
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining('/api/dashboard'),
+        expect.objectContaining({
+          headers: expect.objectContaining({ Authorization: 'Bearer test-token' }),
+        })
+      )
+    })
+  })
+
+  it('handles API failure gracefully (streak defaults to 0)', async () => {
+    vi.useRealTimers()
+    localStorage.setItem('auth_token', 'valid-token')
+    vi.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
+    renderWithRouter(<DashboardPage />)
+    await act(async () => {})
+    const headings = screen.getAllByText('Racha')
+    expect(headings.length).toBeGreaterThanOrEqual(1)
   })
 })

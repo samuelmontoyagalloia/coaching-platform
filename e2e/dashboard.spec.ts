@@ -40,9 +40,14 @@ test.describe('Dashboard (new)', () => {
     await expect(page.getByText('OFERTA')).toBeVisible()
   })
 
-  test('shows streak number', async ({ page }) => {
+  test('shows streak section with weekday labels', async ({ page }) => {
     await page.goto('/dashboard')
-    await expect(page.getByText('23')).toBeVisible()
+    await expect(page.getByText('Racha')).toBeVisible()
+    await expect(page.getByText('Días consecutivos ejecutando')).toBeVisible()
+    await expect(page.getByText('L')).toBeVisible()
+    await expect(page.getByText('V')).toBeVisible()
+    await expect(page.getByText('S')).toBeVisible()
+    await expect(page.getByText('D')).not.toBeVisible()
   })
 
   test('shows progress percentage', async ({ page }) => {
