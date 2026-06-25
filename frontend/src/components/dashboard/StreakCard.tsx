@@ -2,6 +2,7 @@ import { Fire, Check } from '@phosphor-icons/react'
 
 interface StreakCardProps {
   days: number
+  loading?: boolean
 }
 
 // Mon-start: index 0=L, 1=M, 2=M, 3=J, 4=V, 5=S — Sunday excluded
@@ -13,11 +14,17 @@ function getTodayIndex() {
   return d === 0 ? -1 : d - 1
 }
 
-export default function StreakCard({ days }: StreakCardProps) {
+export default function StreakCard({ days, loading }: StreakCardProps) {
   const todayIndex = getTodayIndex()
 
   return (
-    <section className="bg-[var(--electric)] border border-[rgba(255,255,255,0.12)] rounded-[var(--radius-0)] p-6 flex flex-col items-center gap-4 lg:sticky lg:top-6">
+    <section
+      className={[
+        'bg-[var(--electric)] border border-[rgba(255,255,255,0.12)] rounded-[var(--radius-0)] p-6 flex flex-col items-center gap-4 lg:sticky lg:top-6',
+        'transition-all duration-700 ease-out',
+        loading ? 'opacity-30 scale-[0.97]' : 'opacity-100 scale-100',
+      ].join(' ')}
+    >
       <h2 className="font-[var(--font-body)] text-[10px] font-medium tracking-[0.36em] uppercase text-[var(--white)] opacity-70 m-0">
         Racha
       </h2>

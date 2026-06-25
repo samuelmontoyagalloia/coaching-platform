@@ -92,4 +92,24 @@ describe('StreakCard', () => {
     render(<StreakCard days={7} />)
     expect(screen.getByText('7')).toBeInTheDocument()
   })
+
+  it('applies reduced opacity when loading', () => {
+    const { container } = render(<StreakCard days={0} loading />)
+    const section = container.querySelector('section')
+    expect(section?.className).toContain('opacity-30')
+    expect(section?.className).toContain('scale-[0.97]')
+  })
+
+  it('renders at full opacity when not loading', () => {
+    const { container } = render(<StreakCard days={23} loading={false} />)
+    const section = container.querySelector('section')
+    expect(section?.className).toContain('opacity-100')
+    expect(section?.className).toContain('scale-100')
+  })
+
+  it('defaults to full opacity when loading prop is not provided', () => {
+    const { container } = render(<StreakCard days={23} />)
+    const section = container.querySelector('section')
+    expect(section?.className).toContain('opacity-100')
+  })
 })
