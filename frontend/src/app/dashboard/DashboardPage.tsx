@@ -19,13 +19,14 @@ export default function DashboardPage() {
   const [userName, setUserName] = useState('')
   const [userPhoto, setUserPhoto] = useState('')
   const [streak, setStreak] = useState(0)
+  const [streakLoading, setStreakLoading] = useState(true)
 
   useEffect(() => {
     setUserName(localStorage.getItem('user_name') || localStorage.getItem('user_email') || '')
     setUserPhoto(localStorage.getItem('user_photo') || localStorage.getItem('photo_url') || '')
 
     const token = localStorage.getItem('auth_token')
-    if (!token) return
+    if (!token) { setStreakLoading(false); return }
     const apiBase = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
     fetch(`${apiBase}/api/dashboard`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -33,6 +34,7 @@ export default function DashboardPage() {
       .then((r) => r.json())
       .then((data) => { if (typeof data.streak === 'number') setStreak(data.streak) })
       .catch(() => {})
+      .finally(() => setStreakLoading(false))
   }, [])
 
   const firstName = userName.includes('@')
@@ -63,13 +65,13 @@ export default function DashboardPage() {
           {/* Row 1: Sessions | Streak */}
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="lg:hidden">
-              <StreakCard days={streak} />
+              <StreakCard days={streak} loading={streakLoading} />
             </div>
             <div className="lg:w-[70%] flex flex-col">
               <SessionsList />
             </div>
             <div className="hidden lg:block lg:w-[30%] lg:min-w-[320px] pt-[30px]">
-              <StreakCard days={streak} />
+              <StreakCard days={streak} loading={streakLoading} />
             </div>
           </div>
           {/* Row 2: Built | Plan */}
