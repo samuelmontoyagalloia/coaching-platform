@@ -39,7 +39,7 @@ passport.use(
         } else {
           user = await prisma.user.update({
             where: { id: user.id },
-            data: { name, photo_url },
+            data: { name, photo_url, ...(!user.client_id && { client_id: client.id }) },
           })
           console.log('[passport] Usuario actualizado:', user.id)
         }

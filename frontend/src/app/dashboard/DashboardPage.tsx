@@ -18,10 +18,21 @@ export default function DashboardPage() {
   const [logoutPhase, setLogoutPhase] = useState<LogoutPhase>('idle')
   const [userName, setUserName] = useState('')
   const [userPhoto, setUserPhoto] = useState('')
+  const [streak, setStreak] = useState(0)
 
   useEffect(() => {
     setUserName(localStorage.getItem('user_name') || localStorage.getItem('user_email') || '')
     setUserPhoto(localStorage.getItem('user_photo') || localStorage.getItem('photo_url') || '')
+
+    const token = localStorage.getItem('auth_token')
+    if (!token) return
+    const apiBase = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
+    fetch(`${apiBase}/api/dashboard`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((r) => r.json())
+      .then((data) => { if (typeof data.streak === 'number') setStreak(data.streak) })
+      .catch(() => {})
   }, [])
 
   const firstName = userName.includes('@')
@@ -52,13 +63,13 @@ export default function DashboardPage() {
           {/* Row 1: Sessions | Streak */}
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="lg:hidden">
-              <StreakCard days={23} />
+              <StreakCard days={streak} />
             </div>
             <div className="lg:w-[70%] flex flex-col">
               <SessionsList />
             </div>
             <div className="hidden lg:block lg:w-[30%] lg:min-w-[320px] pt-[30px]">
-              <StreakCard days={23} />
+              <StreakCard days={streak} />
             </div>
           </div>
           {/* Row 2: Built | Plan */}
