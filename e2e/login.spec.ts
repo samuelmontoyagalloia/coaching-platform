@@ -6,11 +6,11 @@ test.describe('Login Page', () => {
   })
 
   test('displays the login page with branding', async ({ page }) => {
-    await expect(page.getByText('Coaching')).toBeVisible()
+    await expect(page.getByText('Coaching').first()).toBeVisible()
     await expect(page.getByText('1:1')).toBeVisible()
     await expect(page.getByText('Tu espacio de ejecución')).toBeVisible()
     await expect(page.getByText('Encuentra tu')).toBeVisible()
-    await expect(page.getByText('negocio')).toBeVisible()
+    await expect(page.getByText('negocio', { exact: true })).toBeVisible()
   })
 
   test('shows Google login button', async ({ page }) => {
@@ -60,6 +60,7 @@ test.describe('Dashboard', () => {
   })
 
   test('shows dashboard with valid token', async ({ page }) => {
+    await page.goto('/')
     const future = Math.floor(Date.now() / 1000) + 3600
     const payload = btoa(JSON.stringify({ userId: 'u1', role: 'client', exp: future }))
     const token = `header.${payload}.signature`
@@ -70,12 +71,13 @@ test.describe('Dashboard', () => {
     }, token)
 
     await page.goto('/dashboard')
-    await expect(page.getByText('Bienvenido,')).toBeVisible()
+    await expect(page.getByText('Bienvenido de vuelta')).toBeVisible()
     await expect(page.getByText('Samuel.')).toBeVisible()
     await expect(page.getByText('Cerrar sesión')).toBeVisible()
   })
 
   test('triggers logout flow', async ({ page }) => {
+    await page.goto('/')
     const future = Math.floor(Date.now() / 1000) + 3600
     const payload = btoa(JSON.stringify({ userId: 'u1', role: 'client', exp: future }))
     const token = `header.${payload}.signature`
@@ -98,6 +100,7 @@ test.describe('Admin', () => {
   })
 
   test('shows admin panel for admin users', async ({ page }) => {
+    await page.goto('/')
     const future = Math.floor(Date.now() / 1000) + 3600
     const payload = btoa(JSON.stringify({ userId: 'a1', role: 'admin', exp: future }))
     const token = `header.${payload}.signature`
@@ -108,12 +111,13 @@ test.describe('Admin', () => {
 
     await page.goto('/admin')
     await expect(page.getByText('Panel de administración')).toBeVisible()
-    await expect(page.getByText('Admin')).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Admin' })).toBeVisible()
   })
 })
 
 test.describe('Root Redirect', () => {
   test('redirects to /dashboard for client users at /', async ({ page }) => {
+    await page.goto('/')
     const future = Math.floor(Date.now() / 1000) + 3600
     const payload = btoa(JSON.stringify({ userId: 'u1', role: 'client', exp: future }))
     const token = `header.${payload}.signature`
@@ -128,6 +132,7 @@ test.describe('Root Redirect', () => {
   })
 
   test('redirects to /admin for admin users at /', async ({ page }) => {
+    await page.goto('/')
     const future = Math.floor(Date.now() / 1000) + 3600
     const payload = btoa(JSON.stringify({ userId: 'a1', role: 'admin', exp: future }))
     const token = `header.${payload}.signature`

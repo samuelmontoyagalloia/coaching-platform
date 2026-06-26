@@ -5,20 +5,20 @@ const BUILT_ITEMS = [
   {
     icon: Target,
     label: 'IKIGAI',
-    title: 'Impactar personas a través de sistemas',
+    title: 'Encontrar el Norte',
     description: 'Tu propósito en el cruce de lo que amas, haces bien y el mundo necesita.',
   },
   {
     icon: Briefcase,
     label: 'NEGOCIO',
-    title: 'Consultoría de procesos',
-    description: 'Ingresos desde tu experiencia de ingeniería, sin intercambiar horas por dinero.',
+    title: 'Investigación de mercado y negocio',
+    description: 'Descubrí oportunidades reales y construí un modelo de negocio sólido.',
   },
   {
     icon: Shield,
     label: 'OFERTA',
-    title: 'Plan 90 días + acompañamiento',
-    description: 'Transformación clara, precio justo y fricción de entrada mínima al cerrar.',
+    title: 'La oferta irresistible',
+    description: 'Una propuesta que tu mercado no pueda rechazar.',
   },
 ]
 

@@ -104,7 +104,7 @@ export default function DashboardPage() {
         </button>
       </footer>
 
-      <ChatFAB />
+      {logoutPhase === 'idle' && <ChatFAB />}
 
       {logoutPhase !== 'idle' && (
         <div className="absolute inset-0 z-[6] bg-[var(--ink)] flex flex-col items-center justify-center text-center px-6">

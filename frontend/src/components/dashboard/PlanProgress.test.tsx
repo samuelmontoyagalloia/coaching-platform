@@ -55,14 +55,14 @@ describe('PlanProgress', () => {
 
   it('applies reduced opacity when loading', () => {
     const { container } = render(<PlanProgress streak={0} loading />)
-    const card = container.querySelector('.flex.items-center.gap-5')
+    const card = container.querySelector('.flex.items-center.gap-8')
     expect(card?.className).toContain('opacity-30')
     expect(card?.className).toContain('scale-[0.97]')
   })
 
   it('renders at full opacity when not loading', () => {
     const { container } = render(<PlanProgress streak={365} loading={false} />)
-    const card = container.querySelector('.flex.items-center.gap-5')
+    const card = container.querySelector('.flex.items-center.gap-8')
     expect(card?.className).toContain('opacity-100')
     expect(card?.className).toContain('scale-100')
   })
