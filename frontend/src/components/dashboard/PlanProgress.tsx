@@ -50,9 +50,9 @@ export default function PlanProgress({ streak, loading }: PlanProgressProps) {
           </div>
         </div>
 
-        <div className="flex flex-col justify-between gap-1 flex-1 self-stretch py-1">
+        <div className="flex flex-col justify-between gap-3 flex-1 self-stretch py-1">
           <div className="self-end text-right">
-            <span className="font-[var(--font-display)] font-bold text-lg text-[var(--white)]">
+            <span className="font-[var(--font-display)] font-bold text-lg text-[var(--white)] whitespace-nowrap">
               Años de proyecto
             </span>
             <span className="block font-[var(--font-body)] font-light text-sm text-[var(--stone)]">

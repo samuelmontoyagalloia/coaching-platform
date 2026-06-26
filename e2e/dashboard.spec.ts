@@ -29,7 +29,7 @@ test.describe('Dashboard (new)', () => {
   test('shows session cards', async ({ page }) => {
     await page.goto('/dashboard')
     await expect(page.getByText('Ikigai — Fundamentos')).toBeVisible()
-    await expect(page.getByText('Negocio e investigación de mercado')).toBeVisible()
+    await expect(page.getByText('Negocio e investigación')).toBeVisible()
     await expect(page.getByText('La oferta que vende')).toBeVisible()
     await expect(page.getByText('Ejecución y momentum')).toBeVisible()
   })
