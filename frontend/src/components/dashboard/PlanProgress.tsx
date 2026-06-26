@@ -1,16 +1,19 @@
 interface PlanProgressProps {
-  progress: number
+  streak: number
 }
 
-export default function PlanProgress({ progress }: PlanProgressProps) {
+export default function PlanProgress({ streak }: PlanProgressProps) {
+  const years = ((streak / 3650) * 10).toFixed(1)
+  const pct = Math.min((streak / 3650) * 100, 100)
+
   const radius = 52
   const circumference = 2 * Math.PI * radius
-  const offset = circumference - (progress / 100) * circumference
+  const offset = circumference - (pct / 100) * circumference
 
   return (
     <section className="flex flex-col gap-4 h-full">
       <h2 className="font-[var(--font-body)] text-[10px] font-medium tracking-[0.36em] uppercase text-[var(--electric-light)] m-0 flex-none">
-        Plan de 90 días
+        Proyecto a 10 años
       </h2>
 
       <div className="flex items-center gap-5 px-12 py-5 border border-[var(--dust)] rounded-[var(--radius-0)] bg-[var(--paper)] flex-1 h-full">
@@ -36,7 +39,7 @@ export default function PlanProgress({ progress }: PlanProgressProps) {
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="font-[var(--font-display)] font-bold text-[clamp(20px,3vw,30px)] text-[var(--white)]">
-                {progress}%
+                {years}
               </span>
             </div>
           </div>
@@ -45,10 +48,10 @@ export default function PlanProgress({ progress }: PlanProgressProps) {
         <div className="flex flex-col justify-between gap-1 flex-1 self-stretch py-1">
           <div className="self-end text-right">
             <span className="font-[var(--font-display)] font-bold text-lg text-[var(--white)]">
-              Construyendo
+              Años de proyecto
             </span>
             <span className="block font-[var(--font-body)] font-light text-sm text-[var(--stone)]">
-              {Math.round(90 - (progress / 100) * 90)} días restantes
+              {Math.max(0, 10 - parseFloat(years)).toFixed(1)} años restantes
             </span>
           </div>
           <button className="self-end mt-0 font-[var(--font-body)] text-[11px] font-medium tracking-[0.28em] uppercase text-[var(--electric-light)] bg-transparent border border-[var(--electric)] rounded-[var(--radius-btn)] px-6 py-[11px] cursor-pointer transition-colors duration-200 hover:text-[var(--white)] hover:border-[var(--white)]">

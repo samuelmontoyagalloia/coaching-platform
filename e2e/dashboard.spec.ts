@@ -20,7 +20,7 @@ test.describe('Dashboard (new)', () => {
     await expect(page.getByText('Samuel.')).toBeVisible()
     await expect(page.getByText('Racha')).toBeVisible()
     await expect(page.getByText('Sesiones')).toBeVisible()
-    await expect(page.getByText('Plan de 90 días')).toBeVisible()
+    await expect(page.getByText('Proyecto a 10 años')).toBeVisible()
     await expect(page.getByText('Lo que construiste')).toBeVisible()
     await expect(page.getByText('Cerrar sesión')).toBeVisible()
   })

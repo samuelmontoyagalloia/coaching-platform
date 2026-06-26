@@ -77,13 +77,13 @@ export default function DashboardPage() {
           {/* Row 2: Built | Plan */}
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="lg:hidden">
-              <PlanProgress progress={67} />
+              <PlanProgress streak={streak} />
             </div>
             <div className="lg:w-[70%] flex flex-col">
               <BuiltSection />
             </div>
             <div className="hidden lg:block lg:w-[30%] lg:min-w-[320px]">
-              <PlanProgress progress={67} />
+              <PlanProgress streak={streak} />
             </div>
           </div>
         </div>
