@@ -73,7 +73,7 @@ describe('DashboardPage (new)', () => {
 
   it('renders PlanProgress', () => {
     renderWithRouter(<DashboardPage />)
-    const headings = screen.getAllByText('Plan de 90 días')
+    const headings = screen.getAllByText('Proyecto a 10 años')
     expect(headings.length).toBeGreaterThanOrEqual(1)
   })
 
