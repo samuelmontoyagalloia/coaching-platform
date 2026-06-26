@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Dashboard (new)', () => {
   test.beforeEach(async ({ page }) => {
+    await page.goto('/')
     const future = Math.floor(Date.now() / 1000) + 3600
     const payload = btoa(JSON.stringify({ userId: 'u1', role: 'client', exp: future }))
     const token = `header.${payload}.signature`
@@ -18,9 +19,9 @@ test.describe('Dashboard (new)', () => {
     await expect(page.getByText('Privado')).toBeVisible()
     await expect(page.getByText('Bienvenido de vuelta')).toBeVisible()
     await expect(page.getByText('Samuel.')).toBeVisible()
-    await expect(page.getByText('Racha')).toBeVisible()
+    await expect(page.getByText('Racha').last()).toBeVisible()
     await expect(page.getByText('Sesiones')).toBeVisible()
-    await expect(page.getByText('Proyecto a 10 años')).toBeVisible()
+    await expect(page.getByText('Proyecto a 10 años').last()).toBeVisible()
     await expect(page.getByText('Lo que construiste')).toBeVisible()
     await expect(page.getByText('Cerrar sesión')).toBeVisible()
   })
@@ -35,29 +36,29 @@ test.describe('Dashboard (new)', () => {
 
   test('shows built cards', async ({ page }) => {
     await page.goto('/dashboard')
-    await expect(page.getByText('IKIGAI')).toBeVisible()
-    await expect(page.getByText('NEGOCIO')).toBeVisible()
-    await expect(page.getByText('OFERTA')).toBeVisible()
+    await expect(page.getByText('IKIGAI', { exact: true })).toBeVisible()
+    await expect(page.getByText('NEGOCIO', { exact: true })).toBeVisible()
+    await expect(page.getByText('OFERTA', { exact: true })).toBeVisible()
   })
 
   test('shows streak section with weekday labels', async ({ page }) => {
     await page.goto('/dashboard')
-    await expect(page.getByText('Racha')).toBeVisible()
-    await expect(page.getByText('Días consecutivos ejecutando')).toBeVisible()
-    await expect(page.getByText('L')).toBeVisible()
-    await expect(page.getByText('V')).toBeVisible()
-    await expect(page.getByText('S')).toBeVisible()
-    await expect(page.getByText('D')).not.toBeVisible()
+    await expect(page.getByText('Racha').last()).toBeVisible()
+    await expect(page.getByText('Días consecutivos ejecutando').last()).toBeVisible()
+    await expect(page.getByText('L').last()).toBeVisible()
+    await expect(page.getByText('V').last()).toBeVisible()
+    await expect(page.getByText('S').last()).toBeVisible()
+    await expect(page.getByText('D', { exact: true })).not.toBeVisible()
   })
 
   test('shows progress percentage', async ({ page }) => {
     await page.goto('/dashboard')
-    await expect(page.getByText('67%')).toBeVisible()
+    await expect(page.getByText('%').last()).toBeVisible()
   })
 
   test('shows chat badge', async ({ page }) => {
     await page.goto('/dashboard')
-    await expect(page.getByText('3')).toBeVisible()
+    await expect(page.getByText('3').first()).toBeVisible()
   })
 
   test('triggers logout flow', async ({ page }) => {

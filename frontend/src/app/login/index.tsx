@@ -327,7 +327,7 @@ export default function LoginPage() {
           </div>
 
           <span style={{ fontFamily: '"DM Sans", sans-serif', fontSize: 13, fontWeight: 300, color: '#8C8780', marginTop: 20, maxWidth: '26ch', lineHeight: 1.6, display: 'block' }}>
-            Toca para entrar con tu huella o Face ID
+            Toca para entrar con tu huella<br />o Face ID
           </span>
 
           {error && (
