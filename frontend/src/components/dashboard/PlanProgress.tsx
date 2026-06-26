@@ -1,8 +1,9 @@
 interface PlanProgressProps {
   streak: number
+  loading?: boolean
 }
 
-export default function PlanProgress({ streak }: PlanProgressProps) {
+export default function PlanProgress({ streak, loading }: PlanProgressProps) {
   const years = ((streak / 3650) * 10).toFixed(1)
   const pct = Math.min((streak / 3650) * 100, 100)
 
@@ -16,7 +17,11 @@ export default function PlanProgress({ streak }: PlanProgressProps) {
         Proyecto a 10 años
       </h2>
 
-      <div className="flex items-center gap-5 px-12 py-5 border border-[var(--dust)] rounded-[var(--radius-0)] bg-[var(--paper)] flex-1 h-full">
+      <div className={[
+        'flex items-center gap-5 px-12 py-5 border border-[var(--dust)] rounded-[var(--radius-0)] bg-[var(--paper)] flex-1 h-full',
+        'transition-all duration-700 ease-out',
+        loading ? 'opacity-30 scale-[0.97]' : 'opacity-100 scale-100',
+      ].join(' ')}>
         <div className="flex items-center justify-center flex-none w-[35%] lg:w-[45%]">
           <div className="relative w-full max-w-[150px] lg:max-w-[200px] aspect-square">
             <svg width="100%" height="100%" viewBox="0 0 120 120" className="transform -rotate-90">
@@ -39,7 +44,7 @@ export default function PlanProgress({ streak }: PlanProgressProps) {
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="font-[var(--font-display)] font-bold text-[clamp(20px,3vw,30px)] text-[var(--white)]">
-                {years}
+                {pct.toFixed(1)}%
               </span>
             </div>
           </div>
