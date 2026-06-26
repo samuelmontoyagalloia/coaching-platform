@@ -11,7 +11,7 @@ describe('SessionsList', () => {
   it('renders all four session cards', () => {
     render(<SessionsList />)
     expect(screen.getByText('Ikigai — Fundamentos')).toBeInTheDocument()
-    expect(screen.getByText('Sistema y negocio')).toBeInTheDocument()
+    expect(screen.getByText('Negocio e investigación de mercado')).toBeInTheDocument()
     expect(screen.getByText('La oferta que vende')).toBeInTheDocument()
     expect(screen.getByText('Ejecución y momentum')).toBeInTheDocument()
   })

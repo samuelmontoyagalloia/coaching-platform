@@ -17,8 +17,8 @@ describe('BuiltSection', () => {
 
   it('renders each card title', () => {
     render(<BuiltSection />)
-    expect(screen.getByText('Impactar personas a través de sistemas')).toBeInTheDocument()
-    expect(screen.getByText('Consultoría de procesos')).toBeInTheDocument()
-    expect(screen.getByText('Plan 90 días + acompañamiento')).toBeInTheDocument()
+    expect(screen.getByText('Encontrar el Norte')).toBeInTheDocument()
+    expect(screen.getByText('Investigación de mercado y negocio')).toBeInTheDocument()
+    expect(screen.getByText('La oferta irresistible')).toBeInTheDocument()
   })
 })
