@@ -2,7 +2,7 @@ import SessionCard from './SessionCard'
 
 const SESSIONS = [
   { number: 1, title: 'Ikigai — Fundamentos', description: 'El cruce entre lo que amas y el mundo necesita.' },
-  { number: 2, title: 'Negocio e investigación de mercado', description: 'Validá tu idea y construí el modelo que encaja con tu perfil.' },
+  { number: 2, title: 'Negocio e investigación', description: 'Validá tu idea y construí el modelo que encaja con tu perfil.' },
   { number: 3, title: 'La oferta que vende', description: 'Construida desde la transformación, no el producto.' },
   { number: 4, title: 'Ejecución y momentum', description: 'Plan de 90 días con metas y hábitos semanales.' },
 ]

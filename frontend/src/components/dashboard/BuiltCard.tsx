@@ -16,7 +16,7 @@ export default function BuiltCard({ icon: IconComp, label, title, description }:
       <span className="font-[var(--font-body)] text-[9px] font-medium tracking-[0.32em] uppercase text-[var(--stone)]">
         {label}
       </span>
-      <h3 className="font-[var(--font-display)] font-bold text-[15px] text-[var(--white)] m-0 leading-snug">
+      <h3 className="font-[var(--font-display)] font-bold text-base text-[var(--white)] m-0 leading-snug">
         {title}
       </h3>
       <p className="font-[var(--font-body)] font-light text-[13px] leading-[1.6] text-[var(--stone)] m-0">
