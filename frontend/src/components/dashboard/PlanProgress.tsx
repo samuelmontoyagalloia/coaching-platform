@@ -18,12 +18,12 @@ export default function PlanProgress({ streak, loading }: PlanProgressProps) {
       </h2>
 
       <div className={[
-        'flex items-center gap-8 px-12 py-5 border border-[var(--dust)] rounded-[var(--radius-0)] bg-[var(--paper)] flex-1 h-full',
+        'flex items-center gap-8 lg:gap-5 px-12 py-5 border border-[var(--dust)] rounded-[var(--radius-0)] bg-[var(--paper)] flex-1 h-full',
         'transition-all duration-700 ease-out',
         loading ? 'opacity-30 scale-[0.97]' : 'opacity-100 scale-100',
       ].join(' ')}>
-        <div className="flex items-center justify-center flex-none w-[40%] lg:w-[50%]">
-          <div className="relative w-full max-w-[180px] lg:max-w-[240px] aspect-square">
+        <div className="flex items-center justify-center flex-none w-[40%] lg:w-[45%]">
+          <div className="relative w-full max-w-[180px] lg:max-w-[200px] aspect-square">
             <svg width="100%" height="100%" viewBox="0 0 120 120" className="transform -rotate-90">
               <circle
                 cx="60" cy="60" r={radius}
